@@ -2,49 +2,49 @@
 #include <string.h>
 
 extern "C" int calcAverage (int *tab, int *amount);
-extern "C" int signCounter (char* typedText , char* sign);
+extern "C" int signCounter (char *typedText , char *sign);
 
-int calc(int* tab)
+void calc(int* tab)
 {
-    
-    int a = 0;   // <---- amount of values, which person want to insert into array
-    int* amount; // <---- pointer
-    amount = &a;
+    int* amount = 0;   // <---- amount of values, which person want to insert into array
 
     //---------CHOOSING AMOUNT OF VALUES--------//
     cout << "Ile chcesz wprowadzic liczb do obliczenia sredniej? \n";
-    cin >> a;
+    cin >> *amount;
+
+    tab = new int[*amount];
 
     //--------------INSERT  VALUES--------------//
-    for (int i = 0; i < a; i++)
+    for (int i = 0; i < *amount; i++)
     {
-        cout <<"Podaj liczbe nr " << i+1 << " \n";
+        cout <<"Podaj liczbe nr " << i + 1 << " \n";
         cin >> tab[i];
     }
 
     //-------RETURNING RESULT FROM ASM MODULE'S FUNCTION-------//
-    cout << "Wynik wynosi: \n";
-    return calcAverage(tab, amount);
+    cout << "Wynik wynosi: " << calcAverage(tab, amount) << "\n";
+
+    delete[] tab;
 }
 
-int checkSignAmount(char* t, char* s)
+void checkSignAmount(char* t, char* s)
 {
     //------------INSERT TEXT AND SIGN---------//
     cout << "Podaj tekst!\n";
     cin.sync(); cin.getline(t, 100);
     cout << "Podaj znak!\n";
-    cin >> s;
+    cin >> *s;
 
 	//------------RETURN RESULT---------------//
-    cout << "Wynik wynosi: \n";
-    return signCounter(t,s);
+    cout << "Wynik wynosi: " << signCounter(t,s) << "\n";
 }
 
-int main() {
-
+int main()
+{
     char* sign;
-    char text[10], select;
-    int tab[10]; //, select;
+    char* text;
+    char select;
+    int* tab;
 
     cout << "Witaj! \n";
     do {
@@ -53,11 +53,23 @@ int main() {
         cout << "2. Sprawdzenie ilosci wystapienia znaku w tekscie. \n";
 		cout << "3. Zakonczenie pracy programu. \n";
         cin >> select;
-        if (select == '1') cout << calc(tab) << endl;
-        else if (select == '2') cout << checkSignAmount(text,sign) << endl;
-		else if (select == '3') cout << "Koniec!";
-        else cout << "Niepoprawny wybor! Wybierz jeszcze raz! \n";
-    }while (select != '3');
+
+        switch (select) {
+            case '1':
+                calc(tab);
+                break;
+            case '2':
+                checkSignAmount(text,sign);
+                break;
+    		case '3':
+                cout << "Koniec!";
+                break;
+            default:
+                cout << "Niepoprawny wybor! Wybierz jeszcze raz! \n";
+                break;
+        }
+    }
+    while (select != '3');
 
     return 0;
 }
