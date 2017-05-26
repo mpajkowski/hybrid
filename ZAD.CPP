@@ -1,9 +1,12 @@
 #include <iostream.h>
+#include <string.h>
+
 extern "C" int calcAverage (int *tab, int *amount);
 extern "C" int signCounter (char* typedText , char* sign);
 
 int calc(int* tab)
 {
+    
     int a = 0;   // <---- amount of values, which person want to insert into array
     int* amount; // <---- pointer
     amount = &a;
@@ -28,7 +31,7 @@ int checkSignAmount(char* t, char* s)
 {
     //------------INSERT TEXT AND SIGN---------//
     cout << "Podaj tekst!\n";
-    cin >> t;
+    cin.sync(); cin.getline(t, 100);
     cout << "Podaj znak!\n";
     cin >> s;
 
@@ -40,8 +43,8 @@ int checkSignAmount(char* t, char* s)
 int main() {
 
     char* sign;
-    char text[10];
-    int tab[10], select;
+    char text[10], select;
+    int tab[10]; //, select;
 
     cout << "Witaj! \n";
     do {
@@ -50,11 +53,11 @@ int main() {
         cout << "2. Sprawdzenie ilosci wystapienia znaku w tekscie. \n";
 		cout << "3. Zakonczenie pracy programu. \n";
         cin >> select;
-        if (select == 1) cout << calc(tab) << endl;
-        else if (select == 2) cout << checkSignAmount(text,sign) << endl;
-		else if (select == 3) cout << "Koniec!";
+        if (select == '1') cout << calc(tab) << endl;
+        else if (select == '2') cout << checkSignAmount(text,sign) << endl;
+		else if (select == '3') cout << "Koniec!";
         else cout << "Niepoprawny wybor! Wybierz jeszcze raz! \n";
-    }while (select != 3);
+    }while (select != '3');
 
     return 0;
 }

@@ -1,110 +1,93 @@
 .MODEL SMALL, C
-
 .stack			400h
-.data
-
-Char		DB		?
-
 .code
 public calcAverage, signCounter
 
 calcAverage PROC NEAR
 
-;;;;;;;;-----------------------LOAD THINGS-------------------'''''''''
 initialize:
-    push BP
-    mov BP,SP           ; SP contains input from the c++ function
-
-    xor bx,bx
-	xor ax,ax
-	xor al,al
-;--------------------------;
-;;;========AMOUNT OF VALUES============;;;;
-    xor si, si
-    mov bx, [bp+6]
-    mov si, [bx] ;; dx bedzie zawierac ilosc liczb
+    push bp
+    mov bp,sp      	    ; SP contains input from the c++ function
 
     xor bx, bx
-;;;========ARRAY==================;;;;;
-    mov bx, [bp+4] ;; wskaznik do pierwszego elementu tablicy
-;;=========LOOP===================;;;;;;;;
-    xor ax, ax
+	xor ax, ax
+	xor si, si
+
+    mov bx, [bp+6] 			; Moving amount's pointer to bx register
+    mov si, [bx] 			; Moving amount of typed values to si register
+
+	xor bx, bx
+    mov bx, [bp+4] 			; Moving array's pointer to bx register
+
     xor dx, dx
     xor di, di
-	xor cx, cx
- ;;;;;;;;;;;;;;;-------;;;;;;;;
+
 loop1:
-	cmp di, si
-	jae	finish
+	cmp di, si  			; Comparing loop counter to amount of typed values, if equal or above, program ends/skips loop and moves to divination
+	jae	finish 
     jmp addition
 
-addition:
+addition:					; Sum'em all!
     mov dx, [bx]
     add ax, dx
 
 	inc di
-	inc cl
-    inc bx
-    inc bx
+    add bx, 2					
 	jmp loop1
-;;;=========END==============;;;;;;;;;;
-
 
 finish:
-	xor bl, bl
+	xor dx, dx		
+	xor bx, bx
 
-	mov bl, cl
-	div bl
+	mov bx, si
+	idiv bx
 
     pop bp
     ret
 
 calcAverage ENDP
 
-signCounter PROC NEAR
-;;;;;;;;-----------------------LOAD THINGS-------------------'''''''''
-_initialize:
-    push BP
-    mov BP,SP           ; SP contains input from the c++ function
+;==========================================================================;
 
-	xor ax,ax
-	xor al,al
-	;;;;------------INITIALIZE SIGN-------------;;;;;;;;
-	mov bx, [bp+6] ;znak
-	mov al, [bx]
-	mov Char, al
+signCounter PROC NEAR
+
+_initialize:
+    push bp
+    mov bp, sp        	    ; SP contains input from the c++ function
 
 	xor ax, ax
-	xor al, al
-	;;;;;-----------------INITIALIZE CHAR ARRAY POINTER----------;;;;;;;;
 	xor bx, bx
-	mov bx, [bp+4]
-	;;;-------MOVING SIGN TO VARIABLE "CHAR"---;;;;;;
-
-	xor dx, dx
-	mov al, Char
 	xor si, si
-;;;;;;;;;;;;;;;-------;;;;;;;;
-_loop1:
+
+	mov bx, [bp+6] 			; Moving sign's pointer to bx register
+	mov al, [bx] 			; Moving sign to al register
+
+
+	xor bx, bx
+	mov bx, [bp+4] 			; Moving array's pointer to bx register
+
+_loop:
 	cmp BYTE PTR [bx], 00h 	; if it's end of the char array, end/skip loop
 	je	_finish    	
 
-	cmp [bx], al	; compare char elements
+	cmp [bx], al			; compare char elements
 	je _IsEqual     
 	jne _isDone
-_IsEqual:			; if is equal, increase si
+
+_IsEqual:					; if is equal, increase si
 	inc si			
 	jmp _isDone
-_isDone:				; if not, jump here and continue
+
+_isDone:					; if not, jump here and continue
 	inc bx
-	jmp _loop1
-;;;---------end;;;;
+	jmp _loop
+
 _finish:
-	xor ax,ax
+	xor al,al
 	mov ax,si
 
-    pop BP
+    pop bp
     ret
-signCounter	ENDP
 
+signCounter	ENDP
 END
