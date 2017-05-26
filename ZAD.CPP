@@ -9,7 +9,7 @@ int calc(int* tab)
     amount = &a;
 
     //---------CHOOSING AMOUNT OF VALUES--------//
-    cout << "Ile c? \n";
+    cout << "Ile chcesz wprowadzic liczb do obliczenia sredniej? \n";
     cin >> a;
 
     //--------------INSERT  VALUES--------------//
@@ -48,7 +48,7 @@ int main() {
         cout << "Wybierz program: \n";
         cout << "1. Obliczenie sredniej z elementow tablicy liczb. \n";
         cout << "2. Sprawdzenie ilosci wystapienia znaku w tekscie. \n";
-		cout << "3. Zakończenie pracy programu. \n";
+		cout << "3. Zakonczenie pracy programu. \n";
         cin >> select;
         if (select == 1) cout << calc(tab) << endl;
         else if (select == 2) cout << checkSignAmount(text,sign) << endl;

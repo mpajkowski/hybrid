@@ -19,18 +19,19 @@ initialize:
 	xor ax,ax
 	xor al,al
 ;--------------------------;
-;;;========ILOSC LICZB============;;;;
+;;;========AMOUNT OF VALUES============;;;;
     xor si, si
     mov bx, [bp+6]
     mov si, [bx] ;; dx bedzie zawierac ilosc liczb
 
     xor bx, bx
-;;;========TABLICA==================;;;;;
+;;;========ARRAY==================;;;;;
     mov bx, [bp+4] ;; wskaznik do pierwszego elementu tablicy
-;;=========PYNTLA====================;;;;;;;;
+;;=========LOOP===================;;;;;;;;
     xor ax, ax
     xor dx, dx
     xor di, di
+	xor cx, cx
  ;;;;;;;;;;;;;;;-------;;;;;;;;
 loop1:
 	cmp di, si
@@ -42,11 +43,19 @@ addition:
     add ax, dx
 
 	inc di
+	inc cl
     inc bx
     inc bx
 	jmp loop1
-;;;=========KUNIEC KURWA==============;;;;;;;;;;
+;;;=========END==============;;;;;;;;;;
+
+
 finish:
+	xor bl, bl
+
+	mov bl, cl
+	div bl
+
     pop bp
     ret
 
