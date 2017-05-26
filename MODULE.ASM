@@ -4,43 +4,34 @@
 public calcAverage, signCounter
 
 calcAverage PROC NEAR
-
 initialize:
     push bp
-    mov bp,sp      	    ; SP contains input from the c++ function
+    mov bp, sp
 
-    xor bx, bx
-	xor ax, ax
-	xor si, si
-
-    mov si, [bp+6] 				; Moving amount of typed values to si register
-
+	xor cx, cx
 	xor bx, bx
-    mov bx, [bp+4] 			; Moving array's pointer to bx register
+	xor ax, ax
 
-    xor dx, dx
-    xor di, di
+    mov cx, [bp+6]      ; Move to cs register size of float array
+    mov bx, [bp+4]      ; Moving array's pointer to bx register
+
+	finit 				; Initialize FPU
+    fldz 				; Load 0.0 to the top of stack
+    
+	;cmp cx, 0
+	;je finish
+	jcxz finish
 
 loop1:
-	cmp di, si  			; Comparing loop counter to amount of typed values, if equal or above, program ends/skips loop and moves to divination
-	jae	finish 
-    jmp addition
 
-addition:					; Sum'em all!
-    mov dx, [bx]
-    add ax, dx
+    fadd DWORD PTR [bx] ; Sum'em all!
+    add bx, 4 			; Moves to next float value in array (every float needs 4 bytes of space)
+	loop loop1
 
-	inc di
-    add bx, 2					
-	jmp loop1
+divination:
+	fidiv WORD PTR [bp+6]
 
 finish:
-	xor dx, dx		
-	xor bx, bx
-
-	mov bx, si
-	idiv bx
-
     pop bp
     ret
 
@@ -49,7 +40,6 @@ calcAverage ENDP
 ;==========================================================================;
 
 signCounter PROC NEAR
-
 _initialize:
     push bp
     mov bp, sp        	    ; SP contains input from the c++ function
@@ -59,7 +49,6 @@ _initialize:
 	xor si, si
 
 	mov al, [bp+6] 			; Moving sign to al register
-
 
 	xor bx, bx
 	mov bx, [bp+4] 			; Moving array's pointer to bx register

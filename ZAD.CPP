@@ -1,10 +1,10 @@
 #include <iostream.h>
 #include <string.h>
 
-extern "C" int calcAverage (int *tab, int amount);
+extern "C" float calcAverage (float *tab, int amount);
 extern "C" int signCounter (char *typedText , char sign);
 
-void calc(int* tab)
+void calc(float* tab)
 {
     int amount = 0;   // <---- amount of values, which person want to insert into array
 
@@ -12,7 +12,7 @@ void calc(int* tab)
     cout << "Ile chcesz wprowadzic liczb do obliczenia sredniej? \n";
     cin >> amount;
 
-    tab = new int[amount];
+    tab = new float[amount];
 
     //--------------INSERT  VALUES--------------//
     for (int i = 0; i < amount; i++)
@@ -49,7 +49,7 @@ int main()
     char sign;
     char text[100];
     char select;
-    int* tab;
+    float* tab;
 
     cout << "Witaj! \n";
     do {
