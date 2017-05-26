@@ -1,24 +1,29 @@
 #include <iostream.h>
 #include <string.h>
 
-extern "C" int calcAverage (int *tab, int *amount);
-extern "C" int signCounter (char *typedText , char *sign);
+extern "C" int calcAverage (int *tab, int amount);
+extern "C" int signCounter (char *typedText , char sign);
 
 void calc(int* tab)
 {
-    int* amount = 0;   // <---- amount of values, which person want to insert into array
+    int amount = 0;   // <---- amount of values, which person want to insert into array
 
     //---------CHOOSING AMOUNT OF VALUES--------//
     cout << "Ile chcesz wprowadzic liczb do obliczenia sredniej? \n";
-    cin >> *amount;
+    cin >> amount;
 
-    tab = new int[*amount];
+    tab = new int[amount];
 
     //--------------INSERT  VALUES--------------//
-    for (int i = 0; i < *amount; i++)
+    for (int i = 0; i < amount; i++)
     {
         cout <<"Podaj liczbe nr " << i + 1 << " \n";
         cin >> tab[i];
+    }
+
+    for (int j = 0; j < amount; j++)
+    {
+        cout << tab[j] << "\n";
     }
 
     //-------RETURNING RESULT FROM ASM MODULE'S FUNCTION-------//
@@ -27,13 +32,13 @@ void calc(int* tab)
     delete[] tab;
 }
 
-void checkSignAmount(char* t, char* s)
+void checkSignAmount(char* t, char s)
 {
     //------------INSERT TEXT AND SIGN---------//
     cout << "Podaj tekst!\n";
     cin.sync(); cin.getline(t, 100);
     cout << "Podaj znak!\n";
-    cin >> *s;
+    cin >> s;
 
 	//------------RETURN RESULT---------------//
     cout << "Wynik wynosi: " << signCounter(t,s) << "\n";
@@ -41,8 +46,8 @@ void checkSignAmount(char* t, char* s)
 
 int main()
 {
-    char* sign;
-    char* text;
+    char sign;
+    char text[100];
     char select;
     int* tab;
 
@@ -59,7 +64,7 @@ int main()
                 calc(tab);
                 break;
             case '2':
-                checkSignAmount(text,sign);
+                checkSignAmount(text, sign);
                 break;
     		case '3':
                 cout << "Koniec!";

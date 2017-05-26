@@ -13,8 +13,7 @@ initialize:
 	xor ax, ax
 	xor si, si
 
-    mov bx, [bp+6] 			; Moving amount's pointer to bx register
-    mov si, [bx] 			; Moving amount of typed values to si register
+    mov si, [bp+6] 				; Moving amount of typed values to si register
 
 	xor bx, bx
     mov bx, [bp+4] 			; Moving array's pointer to bx register
@@ -59,8 +58,7 @@ _initialize:
 	xor bx, bx
 	xor si, si
 
-	mov bx, [bp+6] 			; Moving sign's pointer to bx register
-	mov al, [bx] 			; Moving sign to al register
+	mov al, [bp+6] 			; Moving sign to al register
 
 
 	xor bx, bx
