@@ -1,5 +1,4 @@
 #include <iostream.h>
-#include <string.h>
 
 extern "C" float calcAverage (float *tab, int amount);
 extern "C" int signCounter (char *typedText , char sign);
@@ -10,7 +9,16 @@ void calc(float* tab)
 
     //---------CHOOSING AMOUNT OF VALUES--------//
     cout << "Ile chcesz wprowadzic liczb do obliczenia sredniej? \n";
-    cin >> amount;
+
+    do
+    {
+        cin.clear(); cin.sync();
+        cin >> amount;
+        if ( (amount < 0) || (!cin.good()) );
+        {
+            cout << "Nieprawidlowa wartosc! Wpisz jeszcze raz! \n";
+        }
+    } while ( (amount < 0) || (!cin.good()) );
 
     tab = new float[amount];
 
@@ -38,7 +46,7 @@ void checkSignAmount(char* t, char s)
     cout << "Podaj tekst!\n";
     cin.sync(); cin.getline(t, 100);
     cout << "Podaj znak!\n";
-    cin >> s;
+    cin.get(s);
 
 	//------------RETURN RESULT---------------//
     cout << "Wynik wynosi: " << signCounter(t,s) << "\n";
