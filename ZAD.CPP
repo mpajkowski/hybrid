@@ -12,26 +12,26 @@ int main()
 {
     char sign;
     char text[100];
-    int select;
+    char select;
     float *tab;
 
     cout << "Witaj! \n";
 
-    while (select != 3) {
+    while (select != '3') {
         cout << "Wybierz program: \n";
         cout << "1. Obliczenie sredniej z elementow tablicy liczb. \n";
         cout << "2. Sprawdzenie ilosci wystapienia znaku w tekscie. \n";
 		cout << "3. Zakonczenie pracy programu. \n";
-        cin >> select;
+        cin.get(select);
 
         switch (select) {
-            case 1:
+            case '1':
                 calc(tab);
                 break;
-            case 2:
+            case '2':
                 checkSignAmount(text, sign);
                 break;
-    		case 3:
+    		case '3':
                 cout << "Koniec!";
                 break;
             default:
